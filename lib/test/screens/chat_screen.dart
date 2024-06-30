@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/chat_bloc.dart';
-import '../bloc/chat_event.dart';
-import '../repositories/chat_repository.dart';
-import '../widgets/message_input.dart';
-import '../widgets/messages_list.dart';
+import '../../bloc/chat_bloc.dart';
+import '../../bloc/chat_event.dart';
+import '../../repositories/chat_repository.dart';
+import '../../widgets/message_input.dart';
+import '../../widgets/messages_list.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key, required this.chatId, required this.userId});

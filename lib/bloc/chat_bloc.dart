@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/message.dart';
 import '../repositories/chat_repository.dart';
@@ -12,11 +14,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       emit(ChatLoading());
       try {
         await emit.forEach<List<Message>>(
-          chatRepository.getMessages(event.chatId),
-          onData: (messages) => ChatLoaded(messages),
-          onError: (_, __) => const ChatError("Failed to load messages"),
+          chatRepository.getMessages(event.chatId, event.userId),
+          onData: (messages) {
+            print(messages);
+            return ChatLoaded(messages);
+          },
+          onError: (_, __) {
+            print(_);
+            print(__);
+            return const ChatError("Checking...");
+          },
         );
       } catch (_) {
+        print(_);
         emit(const ChatError("Failed to load messages"));
       }
     });
@@ -26,6 +36,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         await chatRepository.sendMessage(
             event.chatId, event.userId, event.message);
       } catch (_) {
+        print(_);
         emit(const ChatError("Failed to send message"));
       }
     });
